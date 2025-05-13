@@ -1,5 +1,6 @@
 import GameScene from './scenes/GameScene.js';
 import PreloadScene from './scenes/PreloadScene.js';
+import MenuScene from './scenes/MenuScene.js';
 
 export default {
     type: Phaser.AUTO,
@@ -7,5 +8,5 @@ export default {
     height: 600,
     backgroundColor: '#ffffff',
     physics: false,
-    scene: [PreloadScene, GameScene],
+    scene: [PreloadScene, MenuScene, GameScene],
 };
