@@ -1,23 +1,22 @@
-import Phaser from 'phaser';
-import Puck from '../objects/Puck';
+import Phaser from "phaser";
+import Puck from "../objects/Puck";
 
 export default class GameScene extends Phaser.Scene {
-    constructor() {
-        super('GameScene');
-    }
+  constructor() {
+    super("GameScene");
+  }
 
-    preload() {
-        this.cameras.main.setBackgroundColor('#42aaff');
-        // Загрузка ассетов
-    }
+  preload() {
+    
+  }
 
-    create() {
-        // Создание объектов
-        this.add.text(200, 250, 'Puck off, motherpucker!', { fontSize: '32px', color: '#1e1e1e' });
-        const puck = new Puck(this, this.cameras.main.width / 2, 300, "logo").setDisplaySize(100, 100);
-    }
+  create() {
+    const width = this.cameras.main.width;
+    const height = this.cameras.main.height;
+    this.add.image(0, 0, "gamebg").setOrigin(0).setDisplaySize(width, height);
+  }
 
-    update() {
-        // Логика игры
-    }
+  update() {
+    // Логика игры
+  }
 }
