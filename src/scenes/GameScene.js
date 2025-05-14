@@ -6,17 +6,13 @@ export default class GameScene extends Phaser.Scene {
     super("GameScene");
   }
 
-  preload() {
-    
-  }
-
   create() {
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
-    this.add.image(0, 0, "gamebg").setOrigin(0).setDisplaySize(width, height);
-  }
 
-  update() {
-    // Логика игры
+    this.add.image(0, 0, "game-background").setOrigin(0).setDisplaySize(width, height);
+
+    const table = this.add.image(width/2, height/2, 'table');
+    table.setScale(1.2);
   }
 }

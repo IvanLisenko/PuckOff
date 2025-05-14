@@ -3,7 +3,7 @@ export function createButton(scene, x, y, text, callback) {
     .text(x, y, text, {
       fontSize: "32px",
       fontStyle: "bold",
-      fontFamily: "Arial",   // <-- добавили моноширинный шрифт
+      fontFamily: "Arial", // <-- добавили моноширинный шрифт
       fill: "#fff",
       padding: {
         left: 20,
@@ -16,11 +16,17 @@ export function createButton(scene, x, y, text, callback) {
     .setInteractive()
     .on("pointerover", () => {
       button.setStyle({ fill: "#CCCEDD" });
+      scene.sound.play("button-pointed");
     })
     .on("pointerout", () => {
       button.setStyle({ fill: "#fff" });
     })
-    .on("pointerdown", callback);
+    .on("pointerdown", () => {
+    scene.sound.play("button-pointed");
+
+      // Подождать чуть-чуть перед выполнением действия
+      scene.time.delayedCall(150, callback);
+    });
 
   const width = button.width;
   const height = button.height;

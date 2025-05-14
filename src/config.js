@@ -4,8 +4,8 @@ import MenuScene from './scenes/MenuScene.js';
 
 export default {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     backgroundColor: '#ffffff',
     physics: false,
     scene: [PreloadScene, MenuScene, GameScene],
