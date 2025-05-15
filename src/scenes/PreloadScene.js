@@ -56,19 +56,17 @@ export default class PreloadScene extends Phaser.Scene {
       });
     });
 
-    // Загружаем ресурсы, которые идут после фона
-    for (let i = 1; i < 20; i++) {
-      this.load.audio(`theme${i}`, [`assets/audio/theme${i}.mp3`]);
-    }
-    this.load.image("logo", "assets/logo/logo.jpg");
+   
     this.load.image("menu", "assets/backgrounds/menu.jpg");
     this.load.audio("menuMusic", "assets/audio/menu_music.mp3");
     this.load.image("sound-on", "assets/logo/sound_on.png");
     this.load.image("sound-off", "assets/logo/sound_off.png");
     this.load.image("gamebg", "assets/backgrounds/game.png");
     this.load.audio("button-pointed", "assets/audio/button_pointed.mp3");
+    this.load.audio("button-clicked", "assets/audio/button_clicked.mp3");
     this.load.image("game-background", "assets/backgrounds/game_background.jpg")
     this.load.image("table", "assets/logo/game_table.png")
+    this.load.image("option-background", "assets/backgrounds/option_background.png")
 
     this.load.on("complete", () => {
       this.scene.start("MenuScene");

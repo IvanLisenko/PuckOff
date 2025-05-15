@@ -1,9 +1,12 @@
+import { AudioSettings } from "./AudioSettings";
+import { SoundManager } from "./SoundManager"; // добавь импорт
+
 export function createButton(scene, x, y, text, callback) {
   const button = scene.add
     .text(x, y, text, {
-      fontSize: "32px",
+      fontSize: "40px",
       fontStyle: "bold",
-      fontFamily: "Arial", // <-- добавили моноширинный шрифт
+      fontFamily: "Arial",
       fill: "#fff",
       padding: {
         left: 20,
@@ -16,15 +19,18 @@ export function createButton(scene, x, y, text, callback) {
     .setInteractive()
     .on("pointerover", () => {
       button.setStyle({ fill: "#CCCEDD" });
-      scene.sound.play("button-pointed");
+
+      const sound = SoundManager.add(scene, "button-pointed", {
+        volume: AudioSettings.sfxVolume * 0.1, // или просто убери volume — он выставится автоматически
+      });
+      sound.play();
     })
     .on("pointerout", () => {
       button.setStyle({ fill: "#fff" });
     })
     .on("pointerdown", () => {
-    scene.sound.play("button-pointed");
-
-      // Подождать чуть-чуть перед выполнением действия
+      const sound = SoundManager.add(scene, "button-clicked");
+      sound.play();
       scene.time.delayedCall(150, callback);
     });
 
