@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { AudioSettings } from "../utils/AudioSettings";
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -6,6 +7,16 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+     // Проверка: если музыка уже есть — не создавать заново
+        if (!this.sound.get("gameMusic")) {
+          this.gameMusic = this.sound.add("gameMusic", {
+            loop: true,
+            volume: AudioSettings.musicVolume,
+          });
+          this.gameMusic.play();
+        } else {
+          this.gameMusic = this.sound.get("gameMusic");
+        }
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
 

@@ -67,6 +67,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image("game-background", "assets/backgrounds/game_background.jpg")
     this.load.image("table", "assets/logo/game_table.png")
     this.load.image("option-background", "assets/backgrounds/option_background.png")
+    this.load.audio("gameMusic", "assets/audio/game_music.mp3")
 
     this.load.on("complete", () => {
       this.scene.start("MenuScene");
