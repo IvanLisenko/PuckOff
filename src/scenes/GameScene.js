@@ -7,53 +7,98 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-     // Проверка: если музыка уже есть — не создавать заново
-        if (!this.sound.get("gameMusic")) {
-          this.gameMusic = this.sound.add("gameMusic", {
-            loop: true,
-            volume: AudioSettings.musicVolume,
-          });
-          this.gameMusic.play();
-        } else {
-          this.gameMusic = this.sound.get("gameMusic");
-        }
-    const width = this.cameras.main.width;
-    const height = this.cameras.main.height;
+    // Музыка
+    if (!this.sound.get("gameMusic")) {
+      this.gameMusic = this.sound.add("gameMusic", {
+        loop: true,
+        volume: AudioSettings.musicVolume,
+      });
+      this.gameMusic.play();
+    } else {
+      this.gameMusic = this.sound.get("gameMusic");
+    }
 
-    // Фон
-    this.add
-      .image(0, 0, "game-background")
+    const { width, height } = this.cameras.main;
+
+    // Фон и игровые элементы
+    this.add.image(0, 0, "game-background")
       .setOrigin(0)
       .setDisplaySize(width, height);
 
-    // Стол (центральное изображение)
-    const table = this.add.image(width / 2, height / 2, "table");
-    table.setScale(1.2);
+    this.add.image(width / 2, height / 2, "table").setScale(1.2);
 
-    // ⚙️ Игровая зона (вручную подогнано под твой фон — можешь поправить значения)
-    const sideMargin = 175; // по 100px с каждой стороны
-    const topBottomMargin = 105;
+    // Кнопка паузы
+    const pauseBtn = this.add
+      .text(width - 30, 30, "▐▐", {
+        font: "24px Arial",
+        fill: "#ffffff",
+      })
+      .setOrigin(1, 0)
+      .setInteractive()
+      .on("pointerdown", () => {
+        console.log("Нажал пазузу");
+        this.scene.launch("PauseScene");
+        if (!this.scene.isPaused()) {
+          this.scene.pause();
+        }
+      });
 
-    const playWidth = width - sideMargin * 2;
-    const playHeight = height - topBottomMargin * 2;
-
-    this.playArea = {
-      x: sideMargin, // слева
-      y: topBottomMargin, // сверху
-      width: playWidth,
-      height: playHeight,
-      radius: 65,
-    };
-
-    // 🔍 Нарисуем границы поля (для отладки — потом можно удалить)
-    const graphics = this.add.graphics();
-    graphics.lineStyle(2, 0xff0000, 1);
-    graphics.strokeRoundedRect(
-      this.playArea.x,
-      this.playArea.y,
-      this.playArea.width,
-      this.playArea.height,
-      this.playArea.radius
+    // Создаем шарик
+    this.ball = this.add.circle(
+      width / 2, 
+      height / 2, 
+      16, 
+      0xff0000 // Красный цвет
     );
+    
+    // Физические параметры шарика
+    this.ballVelocity = {
+      x: Phaser.Math.Between(1000, 2000) * Phaser.Math.Between(0, 1) ? 1 : -1,
+      y: Phaser.Math.Between(1000, 2000) * Phaser.Math.Between(0, 1) ? 1 : -1
+    };
+    
+    // Границы мира
+    this.worldBounds = {
+      x: 0,
+      y: 0,
+      width: width,
+      height: height
+    };
+  }
+
+  update(time, delta) {
+    // Нормализуем скорость относительно времени кадра
+    const deltaFactor = delta / 0.1; // 16ms - стандартное время кадра
+    
+    // Перемещаем шарик
+    this.ball.x += this.ballVelocity.x * deltaFactor;
+    this.ball.y += this.ballVelocity.y * deltaFactor;
+    
+    // Проверка столкновений с границами
+    const radius = 16;
+    
+    // Правая граница
+    if (this.ball.x + radius > this.worldBounds.width) {
+      this.ball.x = this.worldBounds.width - radius;
+      this.ballVelocity.x *= -1; // Отражаем по X
+    }
+    
+    // Левая граница
+    if (this.ball.x - radius < this.worldBounds.x) {
+      this.ball.x = radius;
+      this.ballVelocity.x *= -1;
+    }
+    
+    // Нижняя граница
+    if (this.ball.y + radius > this.worldBounds.height) {
+      this.ball.y = this.worldBounds.height - radius;
+      this.ballVelocity.y *= -1; // Отражаем по Y
+    }
+    
+    // Верхняя граница
+    if (this.ball.y - radius < this.worldBounds.y) {
+      this.ball.y = radius;
+      this.ballVelocity.y *= -1;
+    }
   }
 }
