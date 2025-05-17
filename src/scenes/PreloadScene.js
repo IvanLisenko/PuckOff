@@ -56,7 +56,6 @@ export default class PreloadScene extends Phaser.Scene {
       });
     });
 
-   
     this.load.image("menu", "assets/backgrounds/menu.jpg");
     this.load.audio("menuMusic", "assets/audio/menu_music.mp3");
     this.load.image("sound-on", "assets/logo/sound_on.png");
@@ -64,10 +63,17 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image("gamebg", "assets/backgrounds/game.png");
     this.load.audio("button-pointed", "assets/audio/button_pointed.mp3");
     this.load.audio("button-clicked", "assets/audio/button_clicked.mp3");
-    this.load.image("game-background", "assets/backgrounds/game_background.jpg")
-    this.load.image("table", "assets/logo/game_table.png")
-    this.load.image("option-background", "assets/backgrounds/option_background.png")
-    this.load.audio("gameMusic", "assets/audio/game_music.mp3")
+    this.load.image(
+      "game-background",
+      "assets/backgrounds/game_background.jpg"
+    );
+    this.load.image("table", "assets/logo/game_table.png");
+    this.load.image(
+      "option-background",
+      "assets/backgrounds/option_background.png"
+    );
+    this.load.audio("gameMusic", "assets/audio/game_music.mp3");
+    this.load.image("puck", "assets/logo/puck.png");
 
     this.load.on("complete", () => {
       this.scene.start("MenuScene");

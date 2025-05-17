@@ -21,15 +21,19 @@ export default class MenuScene extends Phaser.Scene {
     overlay.fillStyle(0x000000, 0.2);
     overlay.fillRect(0, 0, width, height);
 
-    // Проверка: если музыка уже есть — не создавать заново
-    if (!this.sound.get("menuMusic")) {
+    const existingMusic = this.sound.get("menuMusic");
+
+    if (!existingMusic) {
       this.menuMusic = this.sound.add("menuMusic", {
         loop: true,
         volume: AudioSettings.musicVolume,
       });
       this.menuMusic.play();
     } else {
-      this.menuMusic = this.sound.get("menuMusic");
+      this.menuMusic = existingMusic;
+      if (!this.menuMusic.isPlaying) {
+        this.menuMusic.play();
+      }
     }
 
     // Кнопка "Начать игру"
