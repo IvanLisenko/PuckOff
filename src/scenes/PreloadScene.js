@@ -74,7 +74,11 @@ export default class PreloadScene extends Phaser.Scene {
     );
     this.load.audio("gameMusic", "assets/audio/game_music.mp3");
     this.load.image("puck", "assets/logo/puck.png");
-
+    this.load.audio("wallBounce", "assets/audio/bounce.mp3");
+    this.load.audio("hit", "assets/audio/hit.mp3");
+    this.load.audio("win", "assets/audio/win.mp3");
+     this.load.audio("goal", "assets/audio/goal.mp3");
+      this.load.audio("goal2", "assets/audio/goal2.mp3");
     this.load.on("complete", () => {
       this.scene.start("MenuScene");
     });

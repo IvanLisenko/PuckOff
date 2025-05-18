@@ -44,7 +44,7 @@ export default class MenuScene extends Phaser.Scene {
 
     // Кнопка "Настройки"
     createButton(this, width / 2, height / 2 + 15, "Настройки", () => {
-      this.scene.start("OptionScene");
+      this.scene.start("SettingsScene");
     });
   }
 }

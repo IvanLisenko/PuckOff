@@ -10,12 +10,6 @@ export default {
     width: 1280,
     height: 720,
     backgroundColor: '#ffffff',
-      physics: {
-    default: "arcade",  // <--- Обязательно укажи arcade или другой движок физики
-    arcade: {
-      debug: false,
-      gravity: { y: 0 }
-    }
-  },
+    physics: false,
     scene: [PreloadScene, MenuScene, GameScene, SettingsScene, PauseScene],
 };

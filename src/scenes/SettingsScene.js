@@ -3,9 +3,9 @@ import { createButton } from "../utils/ButtonUtils";
 import { AudioSettings } from "../utils/AudioSettings";
 import { SoundManager } from "../utils/SoundManager";
 
-export default class OptionScene extends Phaser.Scene {
+export default class SettingsScene extends Phaser.Scene {
   constructor() {
-    super("OptionScene");
+    super("SettingsScene");
   }
 
   create() {
