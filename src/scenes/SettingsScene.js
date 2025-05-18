@@ -44,18 +44,20 @@ export default class SettingsScene extends Phaser.Scene {
         // Если музыка уже играет — можно сразу обновить громкость:
         const currentMusic = this.sound.get("menuMusic");
         if (currentMusic) currentMusic.setVolume(value);
+        const gameMusic = this.sound.get("gameMusic");
+        if (gameMusic) gameMusic.setVolume(value);
       }
     );
 
-this.createSlider(
-  width / 2 - 200,
-  height / 2 + 30,
-  AudioSettings.sfxVolume,
-  (value) => {
-    AudioSettings.sfxVolume = value;
-    SoundManager.updateVolumes(); // обновим все звуки
-  }
-);
+    this.createSlider(
+      width / 2 - 200,
+      height / 2 + 30,
+      AudioSettings.sfxVolume,
+      (value) => {
+        AudioSettings.sfxVolume = value;
+        SoundManager.updateVolumes(); // обновим все звуки
+      }
+    );
 
     createButton(this, width / 2, height / 2 + 130, "Выход", () => {
       this.scene.start("MenuScene");

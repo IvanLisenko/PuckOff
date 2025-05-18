@@ -8,16 +8,16 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-     let existingMusic = this.sound.get("gameMusic");
-  if (!existingMusic) {
-    this.gameMusic = SoundManager.add(this, "gameMusic", { loop: true });
+  
+ // Получаем или создаём музыку
+  // Всегда используем текущее значение громкости из AudioSettings
+  this.gameMusic = this.sound.get("gameMusic") || this.sound.add("gameMusic", {
+    loop: true,
+    volume: AudioSettings.musicVolume // Берём актуальное значение!
+  });
+
+  if (!this.gameMusic.isPlaying) {
     this.gameMusic.play();
-  } else {
-    this.gameMusic = existingMusic;
-    if (!this.gameMusic.isPlaying) {
-      this.gameMusic.play();
-    }
-    this.gameMusic.setVolume(AudioSettings.musicVolume * 0.7);
   }
     this.maxScore = 5;
     this.isGameOver = false;
@@ -44,7 +44,7 @@ export default class GameScene extends Phaser.Scene {
       minHitSpeed: 300,
       minBounceSpeed: 100,
     });
-  
+
     // --- Задний фон ---
     this.add
       .image(0, 0, "game-background")
@@ -240,9 +240,14 @@ export default class GameScene extends Phaser.Scene {
     // Второй прямоугольник (чуть правее, просто для примера)
     this.rightRect = this.add.rectangle(centerX + 465, centerY, 4, 100, color);
   }
+  updateMusicVolume(volume) {
+  if (this.gameMusic) {
+    this.gameMusic.setVolume(volume);
+  }
+}
   updateScore(side) {
     if (this.isGameOver) return;
-    
+
     if (side === "left") {
       const sound = SoundManager.add(this, "goal", {
         volume: AudioSettings.sfxVolume, // или просто убери volume — он выставится автоматически
@@ -250,7 +255,7 @@ export default class GameScene extends Phaser.Scene {
       sound.play();
       this.leftScore++;
     } else {
-        const sound = SoundManager.add(this, "goal2", {
+      const sound = SoundManager.add(this, "goal2", {
         volume: AudioSettings.sfxVolume, // или просто убери volume — он выставится автоматически
       });
       sound.play();
@@ -312,9 +317,9 @@ export default class GameScene extends Phaser.Scene {
     let winnerText;
     let winnerColor;
     const sound = SoundManager.add(this, "win", {
-        volume: AudioSettings.sfxVolume, // или просто убери volume — он выставится автоматически
-      });
-      sound.play();
+      volume: AudioSettings.sfxVolume, // или просто убери volume — он выставится автоматически
+    });
+    sound.play();
     if (this.leftScore > this.rightScore) {
       winnerText = "Красный игрок выиграл!";
       winnerColor = "#ff0000"; // красный
